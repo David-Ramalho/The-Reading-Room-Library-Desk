@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <title>The Reading Room — Library Desk</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#overview" data-page="overview" aria-label="The Reading Room home">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span><strong>The Reading Room</strong><small>COMMUNITY LIBRARY</small></span>
+      </a>
+
+      <div class="side-label">LIBRARY DESK</div>
+      <nav class="main-nav">
+        <button class="nav-item active" data-page="overview"><span class="nav-icon">◫</span>Overview</button>
+        <button class="nav-item" data-page="catalog"><span class="nav-icon">▤</span>Book catalog<span class="nav-count" id="nav-book-count">0</span></button>
+        <button class="nav-item" data-page="loans"><span class="nav-icon">↗</span>Loans</button>
+        <button class="nav-item" data-page="members"><span class="nav-icon">♙</span>Members</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="shelf-note"><span class="note-icon">☼</span><div><strong>A little reminder</strong><p>Every book finds its reader.</p></div></div>
+        <div class="profile"><div class="avatar avatar-small">MR</div><div><strong>Morgan Reed</strong><small>Librarian</small></div><span class="profile-dots">···</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Library</span><span class="crumb-divider">/</span><strong id="current-crumb">Overview</strong></div>
+        <div class="top-actions">
+          <label class="global-search"><span aria-hidden="true">⌕</span><input id="global-search" type="search" placeholder="Search books or members" aria-label="Search books or members"><kbd>⌘ K</kbd></label>
+          <button class="icon-button" id="export-button" title="Download a backup" aria-label="Download a backup">↓</button>
+          <button class="avatar avatar-top" aria-label="Morgan Reed profile">MR</button>
+        </div>
+      </header>
+
+      <section class="page active-page" id="page-overview" aria-labelledby="page-title">
+        <div class="welcome-row">
+          <div><div class="eyebrow" id="today-label">TUESDAY, OCTOBER 13</div><h1 id="page-title">A good day to get lost in a book.</h1><p class="page-subtitle">Here’s what’s happening around the library today.</p></div>
+          <button class="button button-primary" data-action="checkout"><span>＋</span> Check out a book</button>
+        </div>
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="dashboard-grid">
+          <section class="panel activity-panel">
+            <div class="panel-heading"><div><h2>Recent checkouts</h2><p>A few stories on their way to new homes.</p></div><button class="text-button" data-page="loans">View all loans <span>→</span></button></div>
+            <div class="table-wrap"><table><thead><tr><th>BOOK</th><th>MEMBER</th><th>CHECKED OUT</th><th>DUE BACK</th><th>STATUS</th></tr></thead><tbody id="recent-loans"></tbody></table></div>
+            <div class="empty-state hidden" id="empty-recent"><span>☼</span><strong>It’s quiet on the checkout desk.</strong><p>When a book heads home, it’ll appear here.</p></div>
+          </section>
+          <aside class="panel shelf-panel">
+            <div class="shelf-topline"><span class="eyebrow">ON THE SHELF</span><span class="shelf-spark">✳</span></div>
+            <h2>Books waiting<br>for their next chapter.</h2>
+            <p>There are <strong id="available-count">0</strong> books ready to be discovered.</p>
+            <div class="mini-books" id="mini-books"></div>
+            <button class="button button-light" data-page="catalog">Browse the catalog <span>→</span></button>
+          </aside>
+        </div>
+        <section class="quote-card"><span class="quote-mark">“</span><p>A library is not a luxury but one of the necessities of life.</p><span class="quote-credit">— Henry Ward Beecher</span><span class="quote-decoration">✳</span></section>
+      </section>
+
+      <section class="page" id="page-catalog" aria-labelledby="catalog-title">
+        <div class="page-heading"><div><div class="eyebrow">THE COLLECTION</div><h1 id="catalog-title">Book catalog</h1><p class="page-subtitle">A home for every kind of story.</p></div><button class="button button-primary" data-action="add-book"><span>＋</span> Add a book</button></div>
+        <div class="toolbar"><label class="local-search"><span>⌕</span><input id="catalog-search" type="search" placeholder="Search by title, author, or genre" aria-label="Search catalog"></label><select id="book-filter" aria-label="Filter books by availability"><option value="all">All books</option><option value="available">Available</option><option value="checked-out">Checked out</option></select><select id="book-sort" aria-label="Sort books"><option value="title">Sort: Title A–Z</option><option value="author">Sort: Author A–Z</option><option value="year-new">Sort: Newest first</option><option value="year-old">Sort: Oldest first</option></select></div>
+        <div class="catalog-grid" id="catalog-grid"></div><div class="empty-state hidden" id="empty-catalog"><span>⌕</span><strong>No books found.</strong><p>Try another search or add a new title to the shelves.</p></div>
+      </section>
+
+      <section class="page" id="page-loans" aria-labelledby="loans-title">
+        <div class="page-heading"><div><div class="eyebrow">CIRCULATION</div><h1 id="loans-title">Loans & returns</h1><p class="page-subtitle">Keep each story moving along.</p></div><button class="button button-primary" data-action="checkout"><span>＋</span> Check out a book</button></div>
+        <div class="toolbar"><div class="filter-pills" id="loan-filters"><button class="pill active" data-filter="all">All loans</button><button class="pill" data-filter="active">On loan</button><button class="pill" data-filter="overdue">Overdue</button><button class="pill" data-filter="returned">Returned</button></div><label class="local-search"><span>⌕</span><input id="loan-search" type="search" placeholder="Search title or member" aria-label="Search loans"></label></div>
+        <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>BOOK</th><th>MEMBER</th><th>CHECKED OUT</th><th>DUE BACK</th><th>STATUS</th><th></th></tr></thead><tbody id="loans-table"></tbody></table></div><div class="empty-state hidden" id="empty-loans"><span>↗</span><strong>No loans match this view.</strong><p>Try a different filter or check out a book.</p></div></div>
+      </section>
+
+      <section class="page" id="page-members" aria-labelledby="members-title">
+        <div class="page-heading"><div><div class="eyebrow">OUR READERS</div><h1 id="members-title">Library members</h1><p class="page-subtitle">The people who bring the stories to life.</p></div><button class="button button-primary" data-action="add-member"><span>＋</span> Add a member</button></div>
+        <div class="toolbar"><label class="local-search"><span>⌕</span><input id="member-search" type="search" placeholder="Search by name or email" aria-label="Search members"></label><div class="toolbar-note" id="member-count-label"></div></div>
+        <div class="members-grid" id="members-grid"></div><div class="empty-state hidden" id="empty-members"><span>♙</span><strong>No members found.</strong><p>Try another search or welcome a new reader.</p></div>
+      </section>
+      <footer class="app-footer"><span>Made for curious minds</span><span>·</span><span>The Reading Room <span id="footer-year">2026</span></span><span class="footer-flower">✳</span><button class="reset-link" data-action="reset-demo">Restore demo data</button></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modal-backdrop" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" aria-label="Close dialog">×</button><div class="eyebrow" id="modal-eyebrow">LIBRARY DESK</div><h2 id="modal-title">Add a book</h2><p class="modal-copy" id="modal-copy">Put another good story on the shelves.</p><form id="modal-form"></form></section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
+
